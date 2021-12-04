@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  #Title é obrigatorio
+  title: API de consultório
+  description: API para controlar médicos e suas especialidades.
+  contact:
+    name: Gustavo Casco
+    email: gugugacasco@gmail.com
+  #Versionamento de API obrigatorio
+  version: 1.0.0
+servers: 
+- url: https://61abca63264ec200176d4338.mockapi.io/
+  description: API de teste
+paths:
+  /especialidade:
+    get:
+      summary: busca todas as especialidades
+      #Obrigatoriamente necessario ter este campo
+      responses:
+        200:
+          description: Codigo de retorno OK!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Especialidades"
+    post:
+      summary: Metodo para cadastrar novas funcionalidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Especialidades"
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidades"
+  /especialidade/{id}:
+    parameters: 
+      #nome tem que ser exatamente o mesmo da url
+      - name: id
+        #Define aonde esse campo vai ser enviado, nesse caso é na url e por isso o tipo path
+        in: path
+          #Esquema desse campo vai ser do tipo inteiro e por ser na URL é um campo obrigatorio
+        schema:
+          type: string
+        required: true
+    get:
+      summary: busca especialidade por id
+      #Quando fazemos os metodos que contem parametros na url é necessario defini-los
+      responses:
+        200:
+          description: Codigo de retorno OK!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Especialidades"
+        404:
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: "Not found"
+    delete:
+      summary: Metodo para deletar especialidade
+      responses:
+        200:
+          description: "Para Saber Se foi Deletado com sucesso o serviço retorno o payload de entrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidades"
+    put:
+      summary: Metodo para atualizar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Especialidades"
+      responses:
+        200: 
+          description: Atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidades"
+components:
+  schemas:
+    Especialidades:
+      type: object
+      properties:
+        name:
+          type: string
+        especialidade:
+          type: integer
+        id:
+          type: string
+  
